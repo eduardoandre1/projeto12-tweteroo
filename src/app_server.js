@@ -15,6 +15,14 @@ app.get("/", (req, res) => {
 
 app.post('/sign-up',(req,res)=>{
     const {username, avatar} = req.body
+    if(typeof username !== 'string'|| typeof avatar  !== 'string'){
+        res.sendStatus(400)
+        return
+    }
+    if(!username || !avatar){
+        res.sendStatus(400)
+        return
+    }
     const user = {username, avatar}
     users.push(user)
     console.log(users)
@@ -22,12 +30,21 @@ app.post('/sign-up',(req,res)=>{
 })
 app.post('/tweets',(req,res)=>{
     const {username, tweet} = req.body
+    //não cadrasatado 
     const user = users.find((user)=>user.username=== username)
     if(!user){
-        console.log('usuario não logado')
-        res.status(401).send("UNAUTHORIZED")
+        return res.sendStatus(401)
+    }
+    // tweet vazios
+    if(typeof username !== 'string'|| typeof tweet  !== 'string'){
+        res.sendStatus(400)
         return
     }
+    if(!username || !tweet){
+        res.sendStatus(400)
+        return
+    }
+    
     const avatar = user.avatar
     const position = chat.length
     const text = {position, username, tweet, avatar}
