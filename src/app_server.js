@@ -3,7 +3,7 @@ import cors from "cors";
 const app = express();
 
 const users = []
-const chat = []
+let chat = []
 // Cria uma instância do servidor
 app.use(cors());
 app.use(express.json());
@@ -69,6 +69,14 @@ app.get('/tweets',(req,res)=>{
         return
     }
 })
+app.get("/tweets/:name",(req,res)=>{
+    const name = req.params.name;
+    const chatname = chat.filter((mensager)=>mensager.username === name)
+    console.log(chatname)
+    res.send(chatname)
+
+}
+)
 
 // Configura o servidor para rodar na porta 4000
 app.listen(5000,()=>console.log('the server is running'));
